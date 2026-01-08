@@ -50,6 +50,7 @@ The system extracts the YouTube transcript, chunks it, stores it in a vector dat
 │   ├── schema.py              # Pydantic input schema
 │   ├── transcript.py          # YouTube transcript extraction
 │
+|__Frontend
 ├── index.html                 # Frontend UI
 ├── .env                       # Environment variables
 ├── requirements.txt
