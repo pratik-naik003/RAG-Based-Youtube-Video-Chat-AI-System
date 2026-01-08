@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Chat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .input-section {
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            transition: all 0.3s;
+        }
+
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .response-section {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .response-section.active {
+            display: block;
+        }
+
+        .response-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .response-box {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 150px;
+            max-height: 400px;
+            overflow-y: auto;
+            line-height: 1.8;
+            color: #2d3748;
+            font-size: 15px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .response-box h1, .response-box h2, .response-box h3 {
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .response-box h1 { font-size: 24px; }
+        .response-box h2 { font-size: 20px; }
+        .response-box h3 { font-size: 18px; }
+
+        .response-box p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .response-box ul, .response-box ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        .response-box li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .response-box code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #d63384;
+        }
+
+        .response-box pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .response-box pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        .response-box strong {
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .response-box em {
+            font-style: italic;
+        }
+
+        .response-box blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 16px;
+            margin: 16px 0;
+            color: #4a5568;
+            font-style: italic;
+        }
+
+        .response-box a {
+            color: #667eea;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .response-box a:hover {
+            border-bottom-color: #667eea;
+        }
+
+        .response-box hr {
+            border: none;
+            border-top: 2px solid #e0e0e0;
+            margin: 20px 0;
+        }
+
+        .response-box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .response-box::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .response-box::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #fee;
+            border-color: #fcc;
+            color: #c33;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .streaming-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4caf50;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎥 YouTube Video Chat</h1>
+            <p>Ask questions about any YouTube video transcript</p>
+        </div>
+        
+        <div class="content">
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="videoUrl">YouTube Video URL</label>
+                    <input 
+                        type="text" 
+                        id="videoUrl" 
+                        placeholder="https://www.youtube.com/watch?v=..."
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="question">Your Question</label>
+                    <textarea 
+                        id="question" 
+                        placeholder="What would you like to know about this video?"
+                    ></textarea>
+                </div>
+
+                <button class="btn" id="submitBtn" onclick="handleSubmit()">
+                    Ask Question
+                </button>
+            </div>
+
+            <div class="response-section" id="responseSection">
+                <div class="response-label">
+                    <span id="streamingIndicator"></span>Response:
+                </div>
+                <div class="response-box" id="responseBox"></div>
+                <div class="status" id="statusText"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isStreaming = false;
+
+        function formatMarkdown(text) {
+            // Remove thinking tags and their content
+            text = text.replace(/<think>[\s\S]*?<\/think>/gi, '');
+            text = text.replace(/<\/think>/gi, '');
+            text = text.replace(/<think>/gi, '');
+            
+            // Escape HTML
+            text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            // Headers
+            text = text.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            text = text.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            text = text.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+            // Bold
+            text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/__(.+?)__/g, '<strong>$1</strong>');
+
+            // Italic
+            text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+            text = text.replace(/_(.+?)_/g, '<em>$1</em>');
+
+            // Code blocks
+            text = text.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+
+            // Inline code
+            text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+            // Links
+            text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+
+            // Blockquotes
+            text = text.replace(/^&gt; (.*)$/gim, '<blockquote>$1</blockquote>');
+
+            // Unordered lists
+            text = text.replace(/^\* (.*)$/gim, '<ul><li>$1</li></ul>');
+            text = text.replace(/^- (.*)$/gim, '<ul><li>$1</li></ul>');
+            text = text.replace(/<\/ul>\n<ul>/g, '');
+
+            // Ordered lists
+            text = text.replace(/^\d+\. (.*)$/gim, '<ol><li>$1</li></ol>');
+            text = text.replace(/<\/ol>\n<ol>/g, '');
+
+            // Horizontal rule
+            text = text.replace(/^---$/gim, '<hr>');
+
+            // Line breaks and paragraphs
+            text = text.replace(/\n\n/g, '</p><p>');
+            text = text.replace(/\n/g, '<br>');
+            
+            // Wrap in paragraph if not already wrapped
+            if (!text.startsWith('<')) {
+                text = '<p>' + text + '</p>';
+            }
+
+            return text;
+        }
+
+        async function handleSubmit() {
+            const videoUrl = document.getElementById('videoUrl').value.trim();
+            const question = document.getElementById('question').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+            const responseSection = document.getElementById('responseSection');
+            const responseBox = document.getElementById('responseBox');
+            const statusText = document.getElementById('statusText');
+            const streamingIndicator = document.getElementById('streamingIndicator');
+
+            if (!videoUrl) {
+                alert('Please enter a YouTube URL');
+                return;
+            }
+
+            if (!question) {
+                alert('Please enter a question');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+            responseSection.classList.add('active');
+            responseBox.innerHTML = '';
+            responseBox.classList.remove('error');
+            statusText.textContent = '';
+            streamingIndicator.innerHTML = '<span class="streaming-indicator"></span>';
+            isStreaming = true;
+
+            try {
+                const response = await fetch('http://localhost:8000/chat-stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        url: videoUrl,
+                        prompt: question
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let accumulatedText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    
+                    if (done) {
+                        isStreaming = false;
+                        streamingIndicator.innerHTML = '';
+                        statusText.textContent = 'Response complete';
+                        responseBox.innerHTML = formatMarkdown(accumulatedText);
+                        break;
+                    }
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    accumulatedText += chunk;
+                    responseBox.innerHTML = formatMarkdown(accumulatedText);
+                    responseBox.scrollTop = responseBox.scrollHeight;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                responseBox.innerHTML = `<p style="color: #c33;"><strong>Error:</strong> ${error.message}</p><p>Make sure your backend server is running on http://localhost:8000</p>`;
+                responseBox.classList.add('error');
+                streamingIndicator.innerHTML = '';
+                statusText.textContent = 'Error occurred';
+                isStreaming = false;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Ask Question';
+            }
+        }
+
+        document.getElementById('question').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                handleSubmit();
+            }
+        });
+
+        document.getElementById('videoUrl').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('question').focus();
+            }
+        });
+    </script>
+</body>
+</html>
