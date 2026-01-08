@@ -44,7 +44,7 @@ The system extracts the YouTube transcript, chunks it, stores it in a vector dat
 
 ```
 .
-├── Backend/
+├── new_Backend/
 │   ├── rag_with_chain.py      # RAG pipeline + streaming logic
 │   ├── routes.py              # FastAPI routes
 │   ├── schema.py              # Pydantic input schema
@@ -214,6 +214,6 @@ in your browser.
 ---
 
 ## 📜 Project Author 
-Pratik naik
-Walchand College of engineering sangli
+*Pratik naik
+*Walchand College of engineering sangli
 
