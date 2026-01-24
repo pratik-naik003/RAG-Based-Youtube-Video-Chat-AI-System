@@ -1,4 +1,4 @@
-# 🎥 RAG-Based YouTube Video Chat AI (Streaming)
+#  RAG-Based YouTube Video Chat AI (Streaming)
 
 A **Retrieval-Augmented Generation (RAG)** based web application that allows users to **ask questions about any YouTube video** and receive **real-time streamed answers** from an LLM using the video’s transcript as context.
 
@@ -6,20 +6,20 @@ The system extracts the YouTube transcript, chunks it, stores it in a vector dat
 
 ---
 
-## 🚀 Features
+##  Features
 
-* 🔗 YouTube Transcript Extraction
-* 🧠 RAG Pipeline using LangChain
-* 📦 FAISS Vector Store
-* 🔍 Semantic Search with HuggingFace Embeddings
-* ⚡ Real-time Streaming LLM Output
-* 🌐 FastAPI Backend
-* 🎨 Clean & Modern HTML/CSS Frontend
-* 🚫 No Chain-of-Thought / Thinking Tokens Shown
+* YouTube Transcript Extraction
+* RAG Pipeline using LangChain
+* FAISS Vector Store
+* Semantic Search with HuggingFace Embeddings
+* Real-time Streaming LLM Output
+* FastAPI Backend
+* Clean & Modern HTML/CSS Frontend
+* No Chain-of-Thought / Thinking Tokens Shown
 
 ---
 
-## 🧩 Tech Stack
+## Tech Stack
 
 ### Backend
 
@@ -40,7 +40,7 @@ The system extracts the YouTube transcript, chunks it, stores it in a vector dat
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 .
@@ -59,7 +59,7 @@ The system extracts the YouTube transcript, chunks it, stores it in a vector dat
 
 ---
 
-## 🔁 How It Works (Flow)
+## How It Works (Flow)
 
 1. User enters:
 
@@ -83,7 +83,7 @@ The system extracts the YouTube transcript, chunks it, stores it in a vector dat
 
 ---
 
-## 🧠 RAG Prompt Design
+## RAG Prompt Design
 
 The system prompt enforces:
 
@@ -100,7 +100,7 @@ Provide ONLY the final answer in a clear, structured format.
 
 ---
 
-## 📡 API Endpoint
+##API Endpoint
 
 ### POST `/chat-stream`
 
@@ -120,7 +120,7 @@ Provide ONLY the final answer in a clear, structured format.
 
 ---
 
-## 🖥️ Frontend Preview
+## Frontend Preview
 
 * Gradient modern UI
 * Live typing indicator
@@ -130,29 +130,29 @@ Provide ONLY the final answer in a clear, structured format.
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 
-### 1️⃣ Clone Repository
+### Clone Repository
 
 ```bash
 git clone <your-repo-url>
 cd <project-folder>
 ```
 
-### 2️⃣ Create Virtual Environment
+### Create Virtual Environment
 
 ```bash
 python -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 ```
 
-### 3️⃣ Install Dependencies
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4️⃣ Environment Variables (`.env`)
+### Environment Variables (`.env`)
 
 ```env
 CEREBRAS_API_KEY=your_api_key_here
@@ -160,7 +160,7 @@ CEREBRAS_API_KEY=your_api_key_here
 
 ---
 
-## ▶️ Run Backend Server
+## Run Backend Server
 
 ```bash
 uvicorn Backend.routes:app --reload
@@ -174,7 +174,7 @@ http://127.0.0.1:8000
 
 ---
 
-## 🌐 Run Frontend
+## Run Frontend
 
 Simply open:
 
@@ -186,7 +186,7 @@ in your browser.
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 * Only works for videos with English transcripts
 * Transcript-based answers only (no hallucination)
@@ -194,17 +194,9 @@ in your browser.
 
 ---
 
-## 🚧 Future Improvements
 
-* Multi-language transcript support
-* Persistent vector storage
-* Authentication
-* Mobile-friendly UI
-* Multi-video RAG support
 
----
-
-## 🙌 Credits
+## Credits
 
 * LangChain
 * Cerebras
@@ -214,7 +206,7 @@ in your browser.
 
 ---
 
-## 📜 Project Author 
+## Project Author 
 *Pratik naik
 *Walchand College of engineering sangli
 
